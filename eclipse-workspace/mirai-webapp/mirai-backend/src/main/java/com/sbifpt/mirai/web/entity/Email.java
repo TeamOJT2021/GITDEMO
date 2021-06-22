@@ -1,5 +1,7 @@
 package com.sbifpt.mirai.web.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,13 +21,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Email {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private long id;
-	@Column(name = "verification_token")
+	private long emailId;
+	@Column(name = "verification_token", length = 64, nullable = false)
 	private String verificationToken;
-	@Column(name = "expire_at")
-	private String expireAt;
+	@Column(name = "expired_at", nullable = false)
+	private Date expiredAt;
+	@Column(name = "createdAt", nullable = false)
+	private Date createdAt;
+	@Column(name = "updatedAt", nullable = false)
+	private Date updatedAt;
 }

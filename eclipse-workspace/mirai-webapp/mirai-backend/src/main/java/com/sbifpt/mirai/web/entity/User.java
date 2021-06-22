@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,42 +25,38 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "users")
-@Data
+@Data 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class User implements java.io.Serializable{
-
+@ToString 
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private long userId;
-	@Column(name = "firstName")
+	@Column(name = "firstName", length = 64,nullable = false)
 	private String firstName;
-	@Column(name = "lastName")
+	@Column(name = "lastName",length = 64,nullable = false)
 	private String lastName;
-	@Column(name = "email")
+	@Column(name = "email",length = 64,nullable = false)
 	private String email;
-	@Column(name = "gender")
-	private boolean gender;
-	@Column(name = "avatar")
-	private String avatar;
-	@Column(name = "phone")
-	private String phone;
-	@Column(name = "hashSendMail")
-	private String hashSendMail;
-	@Column(name = "enabled")
-	private boolean enabled;
-	@Column(name = "password")
+	@Column(name = "password",length = 64,nullable = false)
 	private String password;
-	@Column(name = "createdAt")
+	@Column(name = "gender",nullable = false)
+	private boolean gender;
+	@Column(name = "avatar",length = 64,nullable = false)
+	private String avatar;
+	@Column(name = "phone",length = 16,nullable = false)
+	private String phone;
+	@Column(name = "enabled",nullable = false)
+	private boolean enabled;
+	@Column(name = "createdAt",nullable = false)
 	private Date createdAt;
-	@Column(name = "updatedAt")
+	@Column(name = "updatedAt",nullable = false)
 	private Date updatedAt;
 
-	
 	@Builder
-	public User(String username,String email, String password) {
+	public User(String username, String email, String password) {
 		super();
 		this.firstName = username;
 		this.email = email;
@@ -70,7 +65,7 @@ public class User implements java.io.Serializable{
 
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "roles_id"))
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
 	@JsonIgnore

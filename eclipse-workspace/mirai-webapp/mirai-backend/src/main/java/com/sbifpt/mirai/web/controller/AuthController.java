@@ -1,14 +1,12 @@
 package com.sbifpt.mirai.web.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sbifpt.mirai.web.dto.request.LoginRequest;
 import com.sbifpt.mirai.web.dto.request.SignupRequest;
-import com.sbifpt.mirai.web.entity.Permission;
-import com.sbifpt.mirai.web.entity.PermissionDetail;
-import com.sbifpt.mirai.web.entity.Role;
-import com.sbifpt.mirai.web.entity.User;
-import com.sbifpt.mirai.web.service.PermissionDetailServiceImpl;
-import com.sbifpt.mirai.web.service.PermissionServiceImpl;
 import com.sbifpt.mirai.web.service.UserServices;
 
 @RestController
@@ -35,11 +27,6 @@ public class AuthController {
 	@Autowired
 	private UserServices userService;
 
-	@Autowired
-	private  PermissionServiceImpl permissionServiceImpl;
-	
-	@Autowired
-	private  PermissionDetailServiceImpl permissionDetailServiceImpl;
 	/**
 	 * Login localhost:8091/api/signin
 	 * 
@@ -104,26 +91,26 @@ public class AuthController {
 		return "ADMIN AND PRODUCT MANAGER";
 	}
 	
-	@GetMapping("/auth/members")
-	public ResponseEntity<?> auth() {
-//		List<Permission> listPer = permissionServiceImpl.find(1, 2);
-		List<User> listUser = userService.getAllUserByRoleIdAndPerId(2, 1);
-		for(User u : listUser) {
-			System.err.println("List user: " + u.getUserId());
-			for(Role r: u.getRoles()) {
-				for(Permission p: r.getPermissions()) {
-					List<PermissionDetail> listPerDetail = permissionDetailServiceImpl.getAllPerDetailByPerId(p.getPermissionId());
-					for(PermissionDetail pd: listPerDetail) {
-						System.err.println("Permission of" + u.getFirstName() + "with Role ID: " + r.getRoleId() + "" + pd.getActionCode());
-					}
-				}
-			}
-		}
-		
-
-		return new ResponseEntity<>(listUser, HttpStatus.OK);
-
-	}	
+//	@GetMapping("/auth/members")
+//	public ResponseEntity<?> auth() {
+////		List<Permission> listPer = permissionServiceImpl.find(1, 2);
+//		List<User> listUser = userService.getAllUserByRoleIdAndPerId(2, 1);
+//		for(User u : listUser) {
+//			System.err.println("List user: " + u.getUserId());
+//			for(Role r: u.getRoles()) {
+//				for(Permission p: r.getPermissions()) {
+//					List<PermissionDetail> listPerDetail = permissionDetailServiceImpl.getAllPerDetailByPerId(p.getPermissionId());
+//					for(PermissionDetail pd: listPerDetail) {
+//						System.err.println("Permission of" + u.getFirstName() + "with Role ID: " + r.getRoleId() + "" + pd.getActionCode());
+//					}
+//				}
+//			}
+//		}
+//		
+//
+//		return new ResponseEntity<>(listUser, HttpStatus.OK);
+//
+//	}	
 
 
 }

@@ -19,18 +19,18 @@ import com.sbifpt.mirai.web.service.UserDetailsServiceImpl;
 
 /**
  * 
- * Configuration security 
+ * Configuration security
+ * 
  * @Bean set object bean to container(context) necessary!
  */
 @Configuration
 @EnableWebSecurity
 /**
  * 
- * Catch request  
+ * Catch request
  *
  */
-@EnableGlobalMethodSecurity(
-		prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -38,7 +38,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
-	
+
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -49,6 +49,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+
 	/**
 	 * 
 	 * Encode password
@@ -57,17 +58,16 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 	/**
 	 * 
-	 *  Register interceptor to context  
+	 * Register interceptor to context
 	 * 
 	 */
 	@Bean
 	public AuthorizationInterceptorHandler authorizationInterceptor() {
 		return new AuthorizationInterceptorHandler();
 	}
-	
-
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -91,18 +91,17 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/", "/home", "/login", "/register" ,"/api/signin",  "/api/signup", "/api/auth/all").permitAll()
 				.antMatchers("/static/**","/favicon.ico").permitAll()
-				.antMatchers("/api/auth/**", "/api/task/**").permitAll()	
-//				
-//				.antMatchers("/api/auth/admin/**").hasAuthority("ADMIN")
-//				.antMatchers("/api/auth/admin/projects").hasAnyAuthority("ADMIN", "PRODUCTMANAGER")
-//				.antMatchers("/api/auth/admin/members").hasAnyAuthority("ADMIN", "PM")
+				.antMatchers("/api/auth/projects/").hasAnyRole("PRODUCTMANAGER", "USER", "ADMIN")
+
+
 
 				/**	
 				 * Obligator  authorization  
 				 */
-				.anyRequest().authenticated();
-//					.and()
-//					.logout().logoutUrl("/logout").logoutSuccessHandler(customLogoutSuccessHandler).permitAll();
+//				.anyRequest().authenticated()
+				;
+
+
 	}
-	
+
 }

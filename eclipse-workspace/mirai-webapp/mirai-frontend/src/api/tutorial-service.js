@@ -11,7 +11,9 @@ export default {
   getAll(params) {
     return axiosApi.get("/tutorials", { params });
   },
-
+  getAllByPublished(params) {
+    return axiosApi.get(`/tutorials/published`, { params });
+  },
   get(id) {
     return axiosApi.get(`/tutorials/${id}`);
   },

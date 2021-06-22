@@ -16,13 +16,17 @@
         placeholder="Type to search"
       />
     </el-col>
-    <el-col :span="14">
+    <el-col :span="10">
       <el-button
         class="primary"
-        type="button"
         size="mini"
         @click="searchByTutorials(this.params.searchTitle)"
         >Search</el-button
+      >
+    </el-col>
+    <el-col :span="4">
+      <el-button class="primary" size="mini" @click="sas"
+        >Get All Published</el-button
       >
     </el-col>
   </el-row>
@@ -46,15 +50,14 @@
       </template>
     </el-table-column>
   </el-table> -->
-  <TutorialDetail :data="tutorials" :key="componentKey" />
+  <TutorialDetail :data="tutorials" />
   <el-pagination
     v-if="tutorialsPaginatedData !== null"
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
-    v-model:currentPage="tutorialsPaginatedData.currentPage"
     background
     :page-sizes="[5, 10, 20, 100]"
-    :page-size="params.pageSize"
+    :page-size="5"
     layout="total, sizes, prev, pager, next, jumper"
     :total="tutorialsPaginatedData.totalItems"
     >>
@@ -72,7 +75,6 @@ export default {
   },
   data() {
     return {
-      componentKey: 0,
       params: {
         searchTitle: "",
         page: 1,
@@ -84,9 +86,10 @@ export default {
     ...mapGetters(["tutorials", "tutorialsPaginatedData", "isLoading"]),
   },
   methods: {
-    forceRerender() {
-      this.componentKey += 1;
+    refreshedTutorials() {
+      this.fetchAllTutorials(this.query);
     },
+
     ...mapActions(["fetchAllTutorials", "searchByTutorials", "deleteTutorial"]),
     removeAllTutorials() {
       TutorialDataService.deleteAll()
@@ -102,7 +105,7 @@ export default {
     handleSizeChange(val) {
       console.log(`${val} items per page`);
       this.params.pageSize = val;
-      this.params.page = 1;
+      this.params.page;
       this.fetchAllTutorials(this.params);
     },
     handleCurrentChange(val) {

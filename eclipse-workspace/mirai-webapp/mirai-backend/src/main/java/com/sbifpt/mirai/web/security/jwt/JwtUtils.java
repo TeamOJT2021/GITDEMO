@@ -40,6 +40,9 @@ public class JwtUtils {
 	 * return string jwt token
 	 */
 	public String getUserNameFromJwtToken(String token) {
+		System.err.println("ABCD: " + token);
+
+		System.err.println("ABCD: " + Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject());
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 	

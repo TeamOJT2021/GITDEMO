@@ -1,10 +1,8 @@
 package com.sbifpt.mirai.web.entity;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,18 +25,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TypeTask implements java.io.Serializable{
+public class TypeTask{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "typeTaskId", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	private long typeTaskId;
-	@Column(name = "name")
-	private String name;
-	@Column(name = "createdAt")
-	private Date createdAt;
-	@Column(name = "updatedAt")
-	private Date updatedAt;
+	@Column(name = "title", length = 64, nullable = false)
+	private String title;
 
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "types_tasks")

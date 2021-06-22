@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,33 +27,31 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Project implements java.io.Serializable{
+public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "projectId", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	private long projectId;
-	@Column(name = "title")
+	@Column(name = "title", length = 64, nullable = false)
 	private String title;
-	@Column(name = "description")
+	@Column(name = "description", columnDefinition = "TEXT", nullable = false)
 	private String description;
-	@Column(name = "duration")
-	private int duration;
-	@Column(name = "startDate")
-	private Date startDate;
-	@Column(name = "endDate")
-	private Date endDate;
-	@Column(name = "status")
+	@Column(name = "status", nullable = false)
 	private boolean status;
-	@Column(name = "rating")
+	@Column(name = "rating", nullable = false)
 	private double rating;
-	@Column(name = "visibility")
+	@Column(name = "visibility", nullable = false)
 	private boolean visibility;
-	@Column(name = "createdAt")
+	@Column(name = "startDate", nullable = false)
+	private Date startDate;
+	@Column(name = "endDate", nullable = false)
+	private Date endDate;
+	@Column(name = "createdAt", nullable = false)
 	private Date createdAt;
-	@Column(name = "updatedAt")
+	@Column(name = "updatedAt", nullable = false)
 	private Date updatedAt;
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projects")
 	private Set<Task> tasks = new HashSet<>();

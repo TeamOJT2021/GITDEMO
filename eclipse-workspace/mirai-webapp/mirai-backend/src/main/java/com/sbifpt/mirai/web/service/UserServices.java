@@ -65,14 +65,7 @@ public class UserServices {
 		return userRepository.existsByEmail(email);
 
 	};
-	
-//	public List<Object> getUserByUserIdAndRoleId(long userId, long roleId){
-//		return userRepository.getUserByUserIdAndRoleId(userId, roleId);
-//	}
-//	
-	public List<User> getAllUserByRoleIdAndPerId(long userId, long perId){
-		return userRepository.getAllUserByRoleIdAndPerId(userId, perId); 
-	}
+
 
 	public ResponseEntity<?> signin(HttpServletResponse response, @Valid @RequestBody LoginRequest loginRequest)
 			throws UnsupportedEncodingException {

@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -113,7 +112,7 @@ public class TutorialController {
 
 	@GetMapping("/tutorials/published")
 	public ResponseEntity<Map<String, Object>> findByPublished(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "3") int size) {
+			@RequestParam(defaultValue = "5") int size) {
 
 		List<Tutorial> tutorials = new ArrayList<Tutorial>();
 		Pageable paging = PageRequest.of(page, size);
@@ -121,10 +120,10 @@ public class TutorialController {
 		if (tutorials.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-
+		
 		Page<Tutorial> pageTuts = tutorialRepository.findByPublished(true, paging);
 		tutorials = pageTuts.getContent();
-
+		System.err.println(tutorials);
 		Map<String, Object> response = new HashMap<>();
 		response.put("tutorials", tutorials);
 		response.put("currentPage", pageTuts.getNumber());

@@ -12,7 +12,7 @@
 
         <el-button
           size="mini"
-          type="danger"
+          class="danger"
           @click="deleteTutorialModal(scope.$index, scope.row)"
           >Delete</el-button
         >
@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "tutorialDetail",
@@ -39,7 +40,7 @@ export default {
     };
   },
   computed: {
-    computed: { ...mapGetters(["isDeleting", "deletedData"]) },
+    // computed: { ...mapGetters(["isDeleting", "deletedData"]) },
   },
 
   methods: {
@@ -73,15 +74,10 @@ export default {
           });
         });
     },
-    // handleDelete(index, row) {
-    //   this.deleteTutorialModal(index, row);
-    //   this.fetchAllTutorials(this.params);
-    // },
   },
-  emits: ["handleDelete"],
-  created() {
-    this.fetchAllTutorials(this.params);
-  },
+  // created() {
+  //   this.fetchAllTutorials(this.params);
+  // },
   // updated() {
   //   this.fetchAllTutorials(this.params);
   // },

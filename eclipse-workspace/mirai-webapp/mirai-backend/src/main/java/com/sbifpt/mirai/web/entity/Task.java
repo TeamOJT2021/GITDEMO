@@ -2,7 +2,6 @@ package com.sbifpt.mirai.web.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,25 +25,25 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Task implements java.io.Serializable{
+public class Task {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private long taskId;
-	@Column(name = "content")
+	@Column(name = "content", columnDefinition = "TEXT", nullable = false)
 	private String content;
-	@Column(name = "note")
+	@Column(name = "note", columnDefinition = "TEXT", nullable = false)
 	private String note;
-	@Column(name = "status")
+	@Column(name = "status", nullable = false)
 	private boolean status;
-	@Column(name = "achieved")
+	@Column(name = "achieved", nullable = false)
 	private boolean achieved;
-	@Column(name = "score")
+	@Column(name = "score", nullable = false)
 	private double score;
-	@Column(name = "createdAt")
+	@Column(name = "createdAt", nullable = false)
 	private Date createdAt;
-	@Column(name = "updatedAt")
+	@Column(name = "updatedAt", nullable = false)
 	private Date updatedAt;
 
 	@JsonIgnore

@@ -63,6 +63,10 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.sbifpt.mirai.web</groupId>
 			<artifactId>mirai-frontend</artifactId>
 			<version>${project.version}</version>

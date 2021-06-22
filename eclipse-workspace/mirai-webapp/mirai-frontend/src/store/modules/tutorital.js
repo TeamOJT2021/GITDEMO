@@ -33,24 +33,54 @@ const actions = {
     }
 
     if (params.page) {
-      console.log("PAGE: ", params.page);
       params["page"] = params.page - 1;
     }
 
     if (params.pageSize) {
-      console.log("PAGE SIZE: ", params.pageSize);
       params["size"] = params.pageSize;
     }
     commit("setTutorialIsLoading", true);
     await TutorialsService.getAll(params)
       .then((response) => {
-        console.log("fetchAllTutorials: ", response.data);
         const tutorials = response.data.tutorials;
+        console.log("fetchAllTutorials: ", tutorials);
+        const editTutorials = tutorials.map((tutorial) => ({
+          ...tutorial,
+          isSelected: false,
+        }));
+        console.log(editTutorials);
         commit("setTutorials", tutorials);
         const pagination = {
           currentPage: response.data.currentPage,
           totalItems: response.data.totalItems,
           totalPages: response.data.totalPages,
+        };
+        commit("setTutorialsPaginatedData", pagination);
+        commit("setTutorialIsLoading", false);
+      })
+      .catch((error) => {
+        console.log(error);
+        commit("setTutorialIsLoading", false);
+      });
+  },
+  async fetchTutorialByPublished({ commit }, params) {
+    if (params.page) {
+      params["page"] = params.page - 1;
+    }
+    if (params.pageSize) {
+      params["size"] = params.pageSize;
+    }
+    commit("setTutorialIsLoading", true);
+    await TutorialsService.getAllByPublished(params)
+      .then((response) => {
+        console.log(response);
+        const tutorials = response.data.tutorials;
+        console.log("fetchTutorialByPublished", tutorials);
+        commit("setTutorials", tutorials);
+        const pagination = {
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+          totalItems: response.data.totalItems,
         };
         commit("setTutorialsPaginatedData", pagination);
         commit("setTutorialIsLoading", false);

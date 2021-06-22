@@ -68,7 +68,7 @@ public class AuthorizationInterceptorHandler extends HandlerInterceptorAdapter {
 			if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
 				System.err.println("Check JWT");
 				String username = jwtUtils.getUserNameFromJwtToken(jwt);
-
+				System.err.println("USER NAME: " + username);
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
