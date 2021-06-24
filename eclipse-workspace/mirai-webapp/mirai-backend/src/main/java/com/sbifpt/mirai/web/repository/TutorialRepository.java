@@ -13,5 +13,7 @@ public interface TutorialRepository extends JpaRepository<Tutorial, Long> {
 	  Page<Tutorial> findByPublished(boolean published, Pageable pageable);
 
 	  Page<Tutorial> findByTitleContaining(String title, Pageable pageable);
+	  
+	  
 
 }

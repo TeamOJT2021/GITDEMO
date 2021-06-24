@@ -5,8 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sbifpt.mirai.web.entity.Task;
-//import com.sbifpt.mirai.web.dto.entity.Task;
+import com.sbifpt.mirai.web.dto.entity.Task;
 import com.sbifpt.mirai.web.repository.TaskRepository;
 
 @Service

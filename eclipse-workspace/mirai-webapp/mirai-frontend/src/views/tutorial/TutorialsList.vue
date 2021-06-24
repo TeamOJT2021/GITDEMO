@@ -24,11 +24,6 @@
         >Search</el-button
       >
     </el-col>
-    <el-col :span="4">
-      <el-button class="primary" size="mini" @click="sas"
-        >Get All Published</el-button
-      >
-    </el-col>
   </el-row>
   <!-- <el-table :data="tutorials" style="width: 100%">
     <el-table-column label="Title" prop="title"> </el-table-column>

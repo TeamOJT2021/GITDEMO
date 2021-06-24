@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sbifpt.mirai.web.entity.User;
+import com.sbifpt.mirai.web.dto.entity.User;
 //import com.sbifpt.mirai.web.dto.entity.User;
 import com.sbifpt.mirai.web.exception.ResourceNotFoundException;
 import com.sbifpt.mirai.web.repository.UserRepository;

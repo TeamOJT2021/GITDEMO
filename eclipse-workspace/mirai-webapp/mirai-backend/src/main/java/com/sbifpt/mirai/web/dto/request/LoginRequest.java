@@ -2,9 +2,7 @@ package com.sbifpt.mirai.web.dto.request;
 
 import java.util.Collection;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 

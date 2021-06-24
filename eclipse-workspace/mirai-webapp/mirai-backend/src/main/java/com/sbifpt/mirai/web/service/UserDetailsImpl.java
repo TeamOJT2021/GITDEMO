@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sbifpt.mirai.web.entity.User;
+import com.sbifpt.mirai.web.dto.entity.User;
 //import com.sbifpt.mirai.web.dto.entity.User;
 
 /**
@@ -46,10 +46,10 @@ public class UserDetailsImpl implements UserDetails {
 	}
 
 	public static UserDetailsImpl build(User user) {
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+		List<GrantedAuthority> authorities = user.getUsersRolesProjectses().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRoles().getName().name())).collect(Collectors.toList());
 
-		return new UserDetailsImpl(user.getUserId(), user.getFirstName(), user.getEmail(), user.getPassword(), authorities);
+		return new UserDetailsImpl(user.getId(), user.getFirstName(), user.getUsername(), user.getPassword(), authorities);
 	}
 	
 	

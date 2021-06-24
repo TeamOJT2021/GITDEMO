@@ -1,12 +1,15 @@
-package com.sbifpt.mirai.web.entity;
+package com.sbifpt.mirai.web.dto.entity;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -15,23 +18,22 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "emails")
+@Table(name = "type_tasks")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class Email {
+public class TypeTask implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private long emailId;
-	@Column(name = "verification_token", length = 64, nullable = false)
-	private String verificationToken;
-	@Column(name = "expired_at", nullable = false)
-	private Date expiredAt;
-	@Column(name = "createdAt", nullable = false)
-	private Date createdAt;
-	@Column(name = "updatedAt", nullable = false)
-	private Date updatedAt;
+	private Long id;
+	@Column(name = "name", length = 50)
+
+	private String name;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "typeTasks")
+
+	private Set<Task> taskses = new HashSet<Task>(0);
+
 }

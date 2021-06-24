@@ -20,20 +20,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import com.sbifpt.mirai.web.common.utils.ToJSON;
 import com.sbifpt.mirai.web.dto.entity.ERole;
+import com.sbifpt.mirai.web.dto.entity.Role;
+import com.sbifpt.mirai.web.dto.entity.User;
+import com.sbifpt.mirai.web.dto.entity.UserRoleProject;
 //import com.sbifpt.mirai.web.dto.entity.Role;
 //import com.sbifpt.mirai.web.dto.entity.User;
 import com.sbifpt.mirai.web.dto.request.LoginRequest;
 import com.sbifpt.mirai.web.dto.request.SignupRequest;
 import com.sbifpt.mirai.web.dto.response.JwtResponse;
-import com.sbifpt.mirai.web.entity.Role;
-import com.sbifpt.mirai.web.entity.User;
 import com.sbifpt.mirai.web.exception.BadRequestException;
 import com.sbifpt.mirai.web.exception.MessageResponse;
 import com.sbifpt.mirai.web.repository.RoleRepository;
 import com.sbifpt.mirai.web.repository.UserRepository;
+import com.sbifpt.mirai.web.repository.UserRoleProjectRepository;
 import com.sbifpt.mirai.web.security.jwt.JwtUtils;
 
 @Service
@@ -55,17 +58,14 @@ public class UserServices {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private UserRoleProjectRepository userRoleProjectRepository;
 
 	public Boolean existsByUsername(String username) {
 		return userRepository.existsByFirstName(username);
 
 	};
-
-	public Boolean existsByEmail(String email) {
-		return userRepository.existsByEmail(email);
-
-	};
-
 
 	public ResponseEntity<?> signin(HttpServletResponse response, @Valid @RequestBody LoginRequest loginRequest)
 			throws UnsupportedEncodingException {
@@ -92,10 +92,10 @@ public class UserServices {
 	}
 
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (userRepository.existsByFirstName(signUpRequest.getUsername())) {
-			throw new BadRequestException("Username is already exit!");
-		}
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+//		if (userRepository.existsByFirstName(signUpRequest.getUsername())) {
+//			throw new BadRequestException("Username is already exit!");
+//		}
+		if (userRepository.existsByUsername(signUpRequest.getEmail())) {
 			throw new BadRequestException("Email is already in use!");
 		}
 		if (signUpRequest.getUsername().equals("") || signUpRequest.getEmail().equals("")
@@ -107,35 +107,55 @@ public class UserServices {
 				passwordEncoder.encode(signUpRequest.getPassword()));
 
 		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
-
+		Set<UserRoleProject> userRoleProject = new HashSet<>();
+		UserRoleProject roleForUser = new UserRoleProject();
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER);
-			roles.add(userRole);
+			roleForUser.setRoles(userRole);
+
 		} else {
+			System.err.println("ROLE: " + strRoles);
+
 			strRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
-					roles.add(adminRole);
-
+					System.err.println(adminRole.getName());
+					roleForUser.setRoles(adminRole);
+					userRoleProjectRepository.save(roleForUser);
 					break;
 				case "mod":
 					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR);
-					roles.add(modRole);
+					System.err.println(modRole.getName());
+					roleForUser.setRoles(modRole);
+					userRoleProjectRepository.save(roleForUser);
 					break;
 				case "pm":
+					System.err.println("Run");
 					Role pmRole = roleRepository.findByName(ERole.ROLE_PRODUCTMANAGER);
-					roles.add(pmRole);
+					System.err.println("Xi bua:" + pmRole.getName());
+					roleForUser.setRoles(pmRole);
+					userRoleProjectRepository.save(roleForUser);
+
 					break;
 				default:
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER);
-					roles.add(userRole);
+					System.err.println(userRole.getName());
+					roleForUser.setRoles(userRole);
+					userRoleProjectRepository.save(roleForUser);
+
 				}
 			});
 		}
 
-		user.setRoles(roles);
+		userRoleProject.add(roleForUser);
+		user.setUsersRolesProjectses(userRoleProject);
+		User u = userRepository.save(user);
+		System.err.println(u.getId());
+		User userById = userRepository.findByUserId(u.getId());
+		roleForUser.setUsers(userById);
+		userRoleProject.add(roleForUser);
+		user.setUsersRolesProjectses(userRoleProject);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully! Please confirm mail to login"));

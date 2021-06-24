@@ -114,7 +114,7 @@ public class TutorialController {
 	public ResponseEntity<Map<String, Object>> findByPublished(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size) {
 
-		List<Tutorial> tutorials = new ArrayList<Tutorial>();
+		List<Tutorial> tutorials = new ArrayList<Tutorial>(); 
 		Pageable paging = PageRequest.of(page, size);
 
 		if (tutorials.isEmpty()) {

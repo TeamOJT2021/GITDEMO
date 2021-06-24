@@ -1,9 +1,10 @@
 package com.sbifpt.mirai.web.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.sbifpt.mirai.web.entity.User;
+import com.sbifpt.mirai.web.dto.entity.User;
 
 //import com.sbifpt.mirai.web.dto.entity.User;
 /**
@@ -16,11 +17,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByFirstName(String username);
 
-	User findByEmail(String email);
+	User findByUsername(String email);
 
 	Boolean existsByFirstName(String username);
 
-	Boolean existsByEmail(String email);
+	Boolean existsByUsername(String email);
+	
+	@Query("SELECT u FROM User u WHERE u.id = ?1")
+	User findByUserId(long userId);
 
 //	@Query("SELECT u, r, p FROM User u JOIN u.roles r JOIN r.permissions p WHERE u.userId = ?1 AND r.roleId =?2")
 //	List<Object> getUserByUserIdAndRoleId(long userId, long roleId);
