@@ -91,7 +91,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/", "/home", "/login", "/register" ,"/api/signin",  "/api/signup", "/api/auth/all").permitAll()
 				.antMatchers("/static/**","/favicon.ico").permitAll()
-				.antMatchers("/api/auth/projects/").hasAnyRole("PRODUCTMANAGER", "USER", "ADMIN")
+				.antMatchers("/api/auth/projects/").hasAnyRole("PROJECTMANAGER", "USER", "ADMIN")
 
 
 

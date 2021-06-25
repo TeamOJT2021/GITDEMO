@@ -106,56 +106,48 @@ public class UserServices {
 		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
 				passwordEncoder.encode(signUpRequest.getPassword()));
 
-		Set<String> strRoles = signUpRequest.getRole();
-		Set<UserRoleProject> userRoleProject = new HashSet<>();
-		UserRoleProject roleForUser = new UserRoleProject();
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER);
-			roleForUser.setRoles(userRole);
+//		Set<String> strRoles = signUpRequest.getRole();
+//		Set<Role> userRoleProject = new HashSet<>();
+//		UserRoleProject roleForUser = new UserRoleProject();
+//		if (strRoles == null) {
+//			Role userRole = roleRepository.findByName(ERole.ROLE_USER);
+//			roleForUser.setRoles(userRole);
+//
+//		} else {
+//			System.err.println("ROLE: " + strRoles);
+//
+//			strRoles.forEach(role -> {
+//				switch (role) {
+//				case "admin":
+//					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
+//					System.err.println(adminRole.getName());
+//					roleForUser.setRoles(adminRole);
+//					userRoleProjectRepository.save(roleForUser);
+//					break;
+//				case "mod":
+//					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR);
+//					System.err.println(modRole.getName());
+//					roleForUser.setRoles(modRole);
+//					userRoleProjectRepository.save(roleForUser);
+//					break;
+//				case "pm":
+//					System.err.println("Run");
+//					Role pmRole = roleRepository.findByName(ERole.ROLE_PROJECTMANAGER);
+//					System.err.println("Xi bua:" + pmRole.getName());
+//					roleForUser.setRoles(pmRole);
+//					userRoleProjectRepository.save(roleForUser);
+//
+//					break;
+//				default:
+//					Role userRole = roleRepository.findByName(ERole.ROLE_USER);
+//					System.err.println(userRole.getName());
+//					roleForUser.setRoles(userRole);
+//					userRoleProjectRepository.save(roleForUser);
+//
+//				}
+//			});
+//		}
 
-		} else {
-			System.err.println("ROLE: " + strRoles);
-
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
-					System.err.println(adminRole.getName());
-					roleForUser.setRoles(adminRole);
-					userRoleProjectRepository.save(roleForUser);
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR);
-					System.err.println(modRole.getName());
-					roleForUser.setRoles(modRole);
-					userRoleProjectRepository.save(roleForUser);
-					break;
-				case "pm":
-					System.err.println("Run");
-					Role pmRole = roleRepository.findByName(ERole.ROLE_PRODUCTMANAGER);
-					System.err.println("Xi bua:" + pmRole.getName());
-					roleForUser.setRoles(pmRole);
-					userRoleProjectRepository.save(roleForUser);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER);
-					System.err.println(userRole.getName());
-					roleForUser.setRoles(userRole);
-					userRoleProjectRepository.save(roleForUser);
-
-				}
-			});
-		}
-
-		userRoleProject.add(roleForUser);
-		user.setUsersRolesProjectses(userRoleProject);
-		User u = userRepository.save(user);
-		System.err.println(u.getId());
-		User userById = userRepository.findByUserId(u.getId());
-		roleForUser.setUsers(userById);
-		userRoleProject.add(roleForUser);
-		user.setUsersRolesProjectses(userRoleProject);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully! Please confirm mail to login"));
