@@ -2,9 +2,7 @@ package com.sbifpt.mirai.web.service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
@@ -20,13 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import com.sbifpt.mirai.web.common.utils.ToJSON;
-import com.sbifpt.mirai.web.dto.entity.ERole;
-import com.sbifpt.mirai.web.dto.entity.Role;
 import com.sbifpt.mirai.web.dto.entity.User;
-import com.sbifpt.mirai.web.dto.entity.UserRoleProject;
 //import com.sbifpt.mirai.web.dto.entity.Role;
 //import com.sbifpt.mirai.web.dto.entity.User;
 import com.sbifpt.mirai.web.dto.request.LoginRequest;
@@ -36,7 +30,6 @@ import com.sbifpt.mirai.web.exception.BadRequestException;
 import com.sbifpt.mirai.web.exception.MessageResponse;
 import com.sbifpt.mirai.web.repository.RoleRepository;
 import com.sbifpt.mirai.web.repository.UserRepository;
-import com.sbifpt.mirai.web.repository.UserRoleProjectRepository;
 import com.sbifpt.mirai.web.security.jwt.JwtUtils;
 
 @Service
@@ -58,9 +51,7 @@ public class UserServices {
 
 	@Autowired
 	private RoleRepository roleRepository;
-	
-	@Autowired
-	private UserRoleProjectRepository userRoleProjectRepository;
+
 
 	public Boolean existsByUsername(String username) {
 		return userRepository.existsByFirstName(username);

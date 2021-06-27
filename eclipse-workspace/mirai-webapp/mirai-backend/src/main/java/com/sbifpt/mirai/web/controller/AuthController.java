@@ -21,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sbifpt.mirai.web.dto.entity.Project;
-import com.sbifpt.mirai.web.dto.entity.Role;
 import com.sbifpt.mirai.web.dto.request.LoginRequest;
 import com.sbifpt.mirai.web.dto.request.SignupRequest;
-import com.sbifpt.mirai.web.exception.UnAuthorizedException;
 import com.sbifpt.mirai.web.repository.ProjectRepository;
 import com.sbifpt.mirai.web.service.UserDetailsImpl;
 import com.sbifpt.mirai.web.service.UserServices;
@@ -103,7 +101,7 @@ public class AuthController {
 		return "ADMIN AND PRODUCT MANAGER";
 	}
 	
-	@PreAuthorize("hasRole('ADMIN') or hasRole('PROJECTMANAGER')")
+//	@PreAuthorize("hasRole('ADMIN') or hasRole('PROJECTMANAGER')")
 	@RequestMapping(value = "/auth/projects", method = RequestMethod.GET)
 	public ResponseEntity<?> findAllProjectByUserId(Principal principal) {
 		UserDetailsImpl loginedUser = (UserDetailsImpl) ((Authentication) principal).getPrincipal();
@@ -113,31 +111,14 @@ public class AuthController {
 			if(listProject.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
+			for(Project p : listProject) {
+				System.err.println(p.getTitle());
+
+			}
 			return new ResponseEntity<>(listProject, HttpStatus.OK);
 	
 	}
 	
-	
-//	@GetMapping("/auth/members")
-//	public ResponseEntity<?> auth() {
-////		List<Permission> listPer = permissionServiceImpl.find(1, 2);
-//		List<User> listUser = userService.getAllUserByRoleIdAndPerId(2, 1);
-//		for(User u : listUser) {
-//			System.err.println("List user: " + u.getUserId());
-//			for(Role r: u.getRoles()) {
-//				for(Permission p: r.getPermissions()) {
-//					List<PermissionDetail> listPerDetail = permissionDetailServiceImpl.getAllPerDetailByPerId(p.getPermissionId());
-//					for(PermissionDetail pd: listPerDetail) {
-//						System.err.println("Permission of" + u.getFirstName() + "with Role ID: " + r.getRoleId() + "" + pd.getActionCode());
-//					}
-//				}
-//			}
-//		}
-//		
-//
-//		return new ResponseEntity<>(listUser, HttpStatus.OK);
-//
-//	}	
 
 
 }

@@ -3,6 +3,8 @@ package com.sbifpt.mirai.web.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,6 +51,11 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+	
+	@Bean
+	public OpenEntityManagerInViewFilter openEntityManagerInViewFilter(){
+		return new OpenEntityManagerInViewFilter();
+	}
 
 	/**
 	 * 
@@ -91,7 +98,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/", "/home", "/login", "/register" ,"/api/signin",  "/api/signup", "/api/auth/all").permitAll()
 				.antMatchers("/static/**","/favicon.ico").permitAll()
-				.antMatchers("/api/auth/projects/").hasAnyRole("PROJECTMANAGER", "USER", "ADMIN")
+//				.antMatchers("/api/auth/projects/").hasAnyRole("PROJECTMANAGER", "USER", "ADMIN")
 
 
 
