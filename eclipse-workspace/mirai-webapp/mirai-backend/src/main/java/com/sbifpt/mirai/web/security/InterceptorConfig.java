@@ -20,6 +20,6 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		// adding custom interceptor
 //		interceptorRegistry.addInterceptor(authorizationInterceptorHandler);
 
-		interceptorRegistry.addInterceptor(authorizationInterceptorHandler).excludePathPatterns("/api/signin", "/api/signup");;
+		interceptorRegistry.addInterceptor(authorizationInterceptorHandler).excludePathPatterns("/api/signin", "/api/signup", "/api/auth/test/projects");;
 	}
 }

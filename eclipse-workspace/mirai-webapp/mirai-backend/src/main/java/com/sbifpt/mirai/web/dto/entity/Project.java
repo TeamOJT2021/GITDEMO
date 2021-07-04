@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -75,13 +76,13 @@ public class Project implements java.io.Serializable {
 	@Column(name = "visibility")
 	private Boolean visibility;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projects")
-	private Set<Task> taskses = new HashSet<Task>(0);
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	private Set<Task> tasks = new HashSet<Task>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projects")
-	private Set<UserRoleProject> usersRolesProjectses = new HashSet<UserRoleProject>(0);
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	private Set<UserRoleProject> usersRolesProjects = new HashSet<UserRoleProject>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projects")
-	private Set<Period> periodses = new HashSet<Period>(0);
 
 }

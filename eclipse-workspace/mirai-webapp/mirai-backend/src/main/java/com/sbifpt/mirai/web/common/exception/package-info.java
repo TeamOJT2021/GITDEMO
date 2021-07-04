@@ -1,0 +1,1 @@
+package com.sbifpt.mirai.web.common.exception;

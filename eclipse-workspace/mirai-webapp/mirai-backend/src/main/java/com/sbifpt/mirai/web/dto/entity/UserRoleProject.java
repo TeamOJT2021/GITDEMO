@@ -1,9 +1,6 @@
 package com.sbifpt.mirai.web.dto.entity;
 // Generated Jun 27, 2021 11:09:08 PM by Hibernate Tools 4.3.1
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,18 +29,18 @@ import lombok.ToString;
 public class UserRoleProject implements java.io.Serializable {
 
 	@EmbeddedId
-	@AttributeOverrides({
-			@AttributeOverride(name = "projectId", column = @Column(name = "project_id", nullable = false)),
-			@AttributeOverride(name = "userId", column = @Column(name = "user_id", nullable = false)) })
-	private UserRoleProjectId id;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "project_id", nullable = false, insertable = false, updatable = false)
-	private Project projects;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "role_id")
-	private Role roles;
+	UserProjectId id;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
-	private User users;
+	private User user;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "project_id", nullable = false, insertable = false, updatable = false)
+	private Project project;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role_id")
+	private Role role;
 
 }

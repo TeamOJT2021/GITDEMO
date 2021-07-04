@@ -13,8 +13,11 @@ import com.sbifpt.mirai.web.dto.entity.Project;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-//	@EntityGraph(value = "usersRolesProjectses", type = EntityGraphType.FETCH)
-	@Query("SELECT p FROM UserRoleProject urp JOIN urp.roles p JOIN urp.users u WHERE u.id = ?1")
+	
+	@Query("SELECT p FROM Project p WHERE p.id = ?1")
+	Project findByProjectId(long projectID);
+	
+	@Query("SELECT p FROM UserRoleProject urp JOIN urp.project p JOIN urp.user u WHERE u.id = ?1")
 	List<Project> findAllProjectByUserId(long userId);
 
 }

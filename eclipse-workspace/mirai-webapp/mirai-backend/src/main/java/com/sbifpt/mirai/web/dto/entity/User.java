@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,7 +43,6 @@ public class User implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	@Column(name = "first_name", length = 50)
@@ -80,14 +81,17 @@ public class User implements java.io.Serializable {
 	@Column(name = "updated_at", length = 23)
 	private Date updatedAt;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	private Set<UserRoleProject> usersRolesProjectses = new HashSet<UserRoleProject>(0);
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<UserRoleProject> usersRolesProjects = new HashSet<UserRoleProject>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	private Set<Email> emailses = new HashSet<Email>(0);
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<Email> emails = new HashSet<Email>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	private Set<Period> periodses = new HashSet<Period>(0);
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<Task> tasks = new HashSet<Task>(0);
 
 	@Builder
 	public User(String username, String firstName, String password) {

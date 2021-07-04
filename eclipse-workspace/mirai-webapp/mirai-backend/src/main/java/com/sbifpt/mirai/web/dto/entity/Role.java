@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -37,15 +39,15 @@ public class Role implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "name", length = 50)
 	private ERole name;
+	@JsonIgnore
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roles")
-	private Set<UserRoleProject> usersRolesProjectses = new HashSet<UserRoleProject>(0);
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+	private Set<UserRoleProject> usersRolesProjects = new HashSet<UserRoleProject>(0);
 
 }

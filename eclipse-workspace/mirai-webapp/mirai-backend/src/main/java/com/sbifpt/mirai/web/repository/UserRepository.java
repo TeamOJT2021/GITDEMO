@@ -26,15 +26,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u FROM User u WHERE u.id = ?1")
 	User findByUserId(long userId);
 
-//	@Query("SELECT u, r, p FROM User u JOIN u.roles r JOIN r.permissions p WHERE u.userId = ?1 AND r.roleId =?2")
-//	List<Object> getUserByUserIdAndRoleId(long userId, long roleId);
-	
-//	@Query("SELECT u, r, p, p.permissionDetails FROM User u JOIN u.roles r JOIN r.permissions p  WHERE u.userId = ?1 AND p.permissionId =?2")
-//	List<Object> getAllUserByUserIdAndPerId(long userId, long perId);
-
-//	@Query("SELECT u FROM User u JOIN u.roles r JOIN r.permissions p  WHERE u.userId = ?1 AND p.permissionId =?2")
-//	User getAllUserByUserIdAndPerId(long userId, long perId);
-
-	
 	
 }

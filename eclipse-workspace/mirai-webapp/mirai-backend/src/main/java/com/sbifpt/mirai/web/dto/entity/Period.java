@@ -2,6 +2,8 @@ package com.sbifpt.mirai.web.dto.entity;
 // Generated Jun 27, 2021 11:09:08 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,17 +42,8 @@ public class Period implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "project_id", unique = true)
-	private Project projects;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", unique = true)
-	private User users;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date", length = 10)
@@ -55,5 +51,16 @@ public class Period implements java.io.Serializable {
 	
 	@Column(name = "score", precision = 53, scale = 0)
 	private Double score;
+	
+	@Column(name = "status")
+	private String status;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "period")
+	private Set<UserProjectPeriod> usersProjectsPeriods = new HashSet<UserProjectPeriod>(0);
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "period")
+	private Set<Task> tasks = new HashSet<Task>(0);
+
 
 }

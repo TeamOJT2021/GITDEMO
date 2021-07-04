@@ -37,25 +37,26 @@ public class Email implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-
-	private User users;
+	
 	@Column(name = "verification_token")
-
 	private String verificationToken;
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "expired_at", length = 23)
 	private Date expiredAt;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at", length = 23)
 	private Date updatedAt;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", length = 23)
 	private Date createdAt;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 
 }

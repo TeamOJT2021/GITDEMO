@@ -6,12 +6,17 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sbifpt.mirai.web.common.enumm.TypeTaskEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,10 +44,12 @@ public class TypeTask implements java.io.Serializable {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	
+    @Enumerated(EnumType.STRING)
 	@Column(name = "name", length = 50)
-	private String name;
+	private TypeTaskEnum name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "typeTasks")
-	private Set<Task> taskses = new HashSet<Task>(0);
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "typeTask")
+	private Set<Task> tasks = new HashSet<>();
 
 }

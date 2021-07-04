@@ -19,19 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.sbifpt.mirai.web.security.jwt.AuthEntryPointJwt;
 import com.sbifpt.mirai.web.service.UserDetailsServiceImpl;
 
-/**
- * 
- * Configuration security
- * 
- * @Bean set object bean to container(context) necessary!
- */
 @Configuration
 @EnableWebSecurity
-/**
- * 
- * Catch request
- *
- */
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
@@ -57,20 +46,11 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		return new OpenEntityManagerInViewFilter();
 	}
 
-	/**
-	 * 
-	 * Encode password
-	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-	/**
-	 * 
-	 * Register interceptor to context
-	 * 
-	 */
 	@Bean
 	public AuthorizationInterceptorHandler authorizationInterceptor() {
 		return new AuthorizationInterceptorHandler();
@@ -78,37 +58,17 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		/**
-		 * cors: Allow api access from 3rd party
-		 */
-		http.cors()
-		.and()
-			.csrf().disable()
-		/**
-		 * Access is denied
-		 */
-		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-		.and()
-			/**
-			 * do not create session
-			 */
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		http.cors().and().csrf().disable()
+			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
 			.and()
-
-				.authorizeRequests()
-				.antMatchers("/", "/home", "/login", "/register" ,"/api/signin",  "/api/signup", "/api/auth/all").permitAll()
-				.antMatchers("/static/**","/favicon.ico").permitAll()
-//				.antMatchers("/api/auth/projects/").hasAnyRole("PROJECTMANAGER", "USER", "ADMIN")
-
-
-
-				/**	
-				 * Obligator  authorization  
-				 */
-//				.anyRequest().authenticated()
-				;
-
-
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+					.authorizeRequests()
+					.antMatchers("/**", "/home", "/login", "/register" ,"/api/signin",  "/api/signup", "/api/auth/all").permitAll()
+					.antMatchers("/static/**","/favicon.ico").permitAll()
+	//				.antMatchers("/api/auth/projects/").hasAnyRole("PROJECTMANAGER", "USER", "ADMIN")
+	//				.anyRequest().authenticated()
+					;
 	}
 
 }
